@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import jwt from 'jsonwebtoken';
+import { createUserJWT } from '../helpers/cookie-setter';
 
 import { BadRequestError } from '../errors/bad-request-error';
 import { validateRequest } from '../middlewares/validate-request';
@@ -29,13 +29,7 @@ router.post(
         await user.save();
 
         // generate jwt
-        const userJWT = jwt.sign(
-            {
-                id: user.id,
-                email: user.email,
-            },
-            process.env.JWT_KEY!
-        );
+        const userJWT = createUserJWT(user.id, user.email);
 
         req.session = { jwt: userJWT };
 
