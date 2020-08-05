@@ -2,8 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { createUserJWT } from '../helpers/cookie-setter';
 
-import { BadRequestError } from '../errors/bad-request-error';
-import { validateRequest } from '../middlewares/validate-request';
+import { BadRequestError, validateRequest } from '@histoiredevelopment/common';
 import { User } from '../models/user';
 const router = express.Router();
 

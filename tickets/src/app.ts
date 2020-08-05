@@ -2,12 +2,14 @@ import express from 'express';
 require('express-async-errors');
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
+import {
+    errorHandler,
+    NotFoundError,
+    currentUser,
+} from '@histoiredevelopment/common';
 
-import { currentUserRouter } from './routes/current-user';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { signupRouter } from './routes/signup';
-import { errorHandler, NotFoundError } from '@histoiredevelopment/common';
+import { createTicketRouter } from './routes/create';
+import { getTicketRouter } from './routes/get-ticket';
 
 const app = express();
 app.set('trust proxy', true);
@@ -19,10 +21,9 @@ app.use(
     })
 );
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
+app.use(currentUser);
+app.use(createTicketRouter);
+app.use(getTicketRouter);
 
 app.all('*', async () => {
     throw new NotFoundError();

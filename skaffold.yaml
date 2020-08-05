@@ -18,6 +18,14 @@ build:
               manual:
                   - src: "src/**/*.ts"
                     dest: .
+        - image: us.gcr.io/resonant-matter-282017/tickets
+          context: tickets
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: "src/**/*.ts"
+                    dest: .
         - image: us.gcr.io/resonant-matter-282017/client
           context: client
           docker:

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 const PORT = 3000;
 
-const mongoURL = process.env.MONGO_URI || 'mongodb://localhost:27017/auth';
+const mongoURL = process.env.MONGO_URI || `mongodb://localhost:27017/tickets`;
 
 const initApp = async () => {
     if (!process.env.JWT_KEY) {
