@@ -1,10 +1,5 @@
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
-import {
-    requireAuth,
-    validateRequest,
-    NotFoundError,
-} from '@histoiredevelopment/common';
+import { NotFoundError } from '@histoiredevelopment/common';
 import { Ticket } from '../models/ticket';
 
 const router = express.Router();

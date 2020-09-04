@@ -1,9 +1,10 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { authedSignup } from '../auth-helper';
+import { authedSignup } from './auth-helper';
 import { Ticket } from '../../models/ticket';
 
 import { mockTitle, mockPrice, mockCreateTicketPayload } from './mock-data';
+import { natsWrapper } from '../../nats-wrapper';
 
 describe('create.ts', () => {
     it('should have a route handler listening to /api/tickets for post requests', async () => {
@@ -64,6 +65,19 @@ describe('create.ts', () => {
             expect(tickets.length).toBe(1);
             expect(tickets[0].price).toEqual(mockPrice);
             expect(tickets[0].title).toEqual(mockTitle);
+        });
+
+        it('should publish event when ticket is created', async () => {
+            let tickets = await Ticket.find({});
+            expect(tickets.length).toBe(0);
+
+            await request(app)
+                .post('/api/tickets')
+                .set('Cookie', authedSignup())
+                .send(mockCreateTicketPayload())
+                .expect(201);
+
+            expect(natsWrapper.client.publish).toHaveBeenCalled();
         });
     });
 });

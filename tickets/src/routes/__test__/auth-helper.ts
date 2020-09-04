@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
+import { createMockId } from './mock-data';
 
 export const authedSignup = () => {
     const payload = {
-        id: 'as89d7fakjhv34',
-        email: 'ijkl@lkji.com',
+        id: createMockId(),
+        email: `${createMockId()}@lkji.com`,
     };
 
     const session = { jwt: jwt.sign(payload, process.env.JWT_KEY!) };
