@@ -11,7 +11,7 @@ import {
 } from './mock-data';
 import { natsWrapper } from '../../nats-wrapper';
 
-describe('update-ticket.ts', () => {
+describe('Ticket update-ticket.ts', () => {
     const createTicket = async () => {
         const cookie = authedSignup();
         return {

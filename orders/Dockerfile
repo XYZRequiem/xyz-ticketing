@@ -2,7 +2,7 @@ FROM node:alpine
 
 WORKDIR /app
 
-ENV DB tickets-mongo-srv
+ENV DB orders-mongo-srv
 
 COPY package.json .
 RUN npm install --only=prod

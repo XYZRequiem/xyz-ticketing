@@ -4,7 +4,7 @@ import { authedSignup } from './auth-helper';
 
 import { mockCreateTicketPayload } from './mock-data';
 
-describe('get-tickets.ts', () => {
+describe('Ticket get-tickets.ts', () => {
     const createTicket = () => {
         return request(app)
             .post('/api/tickets')

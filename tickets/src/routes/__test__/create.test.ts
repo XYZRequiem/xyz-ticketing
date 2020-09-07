@@ -6,7 +6,7 @@ import { Ticket } from '../../models/ticket';
 import { mockTitle, mockPrice, mockCreateTicketPayload } from './mock-data';
 import { natsWrapper } from '../../nats-wrapper';
 
-describe('create.ts', () => {
+describe('Ticket create.ts', () => {
     it('should have a route handler listening to /api/tickets for post requests', async () => {
         const response = await request(app).post('/api/tickets').send({});
 

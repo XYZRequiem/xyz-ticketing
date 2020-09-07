@@ -9,7 +9,7 @@ import {
     createMockId,
 } from './mock-data';
 
-describe('get-ticket.ts', () => {
+describe('Ticket get-ticket.ts', () => {
     it('should return 404 if the ticket does not exist', async () => {
         await request(app)
             .get(`/api/tickets/${createMockId()}`)
