@@ -1,8 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { createMockId, createMockTicket, createMockOrder } from './mock-data';
+import { createMockId, createMockOrder } from './mock-data';
 import { authedSignup } from './auth-helper';
-import { OrderDoc } from '../../models/order';
 
 describe('Order get-order.ts', () => {
     const createGetOrderURL = (orderId: string) => `/api/orders/${orderId}`;

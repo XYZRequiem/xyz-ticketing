@@ -11,7 +11,7 @@ import {
 import { createOrderRouter } from './routes/create';
 import { getOrderRouter } from './routes/get-order';
 import { getOrdersRouter } from './routes/get-orders';
-import { deleteOrdersRouter } from './routes/delete';
+import { updateOrdersRouter } from './routes/update';
 // import { updateOrderRouter } from './routes/update';
 
 const app = express();
@@ -28,7 +28,7 @@ app.use(currentUser);
 app.use(createOrderRouter);
 app.use(getOrderRouter);
 app.use(getOrdersRouter);
-app.use(deleteOrdersRouter);
+app.use(updateOrdersRouter);
 // app.use(updateOrderRouter);
 
 app.all('*', async () => {
