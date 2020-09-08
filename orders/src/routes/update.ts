@@ -6,6 +6,8 @@ import {
     UnauthorizedError,
     OrderStatus,
 } from '@histoiredevelopment/common';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -13,7 +15,9 @@ router.patch(
     '/api/orders/:orderId/cancel',
     requireAuth,
     async (req: Request, res: Response) => {
-        const order = await Order.findById(req.params.orderId);
+        const order = await Order.findById(req.params.orderId).populate(
+            'ticket'
+        );
         if (!order) {
             throw new NotFoundError();
         }
@@ -24,7 +28,12 @@ router.patch(
         order.status = OrderStatus.Cancelled;
         await order.save();
 
-        // publish order cancelled event
+        new OrderCancelledPublisher(natsWrapper.client).publish({
+            id: order.id,
+            ticket: {
+                id: order.ticket.id,
+            },
+        });
 
         res.send(order);
     }

@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { createMockId, createMockTicket, createMockOrder } from './mock-data';
 import { authedSignup } from './auth-helper';
+import { natsWrapper } from '../../nats-wrapper';
 
 describe('Order create.ts', () => {
     const createURL = '/api/orders';
@@ -36,5 +37,15 @@ describe('Order create.ts', () => {
             .expect(201);
     });
 
-    it.todo('should emit an order created event');
+    it('should emit an order created event', async () => {
+        const ticket = await createMockTicket(undefined);
+
+        await request(app)
+            .post(createURL)
+            .set('Cookie', authedSignup())
+            .send({ ticketId: ticket.id })
+            .expect(201);
+
+        expect(natsWrapper.client.publish).toHaveBeenCalled();
+    });
 });
