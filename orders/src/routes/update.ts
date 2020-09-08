@@ -24,6 +24,8 @@ router.patch(
         order.status = OrderStatus.Cancelled;
         await order.save();
 
+        // publish order cancelled event
+
         res.send(order);
     }
 );

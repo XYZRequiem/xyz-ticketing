@@ -39,5 +39,7 @@ describe('Order update.ts', () => {
             const updatedOrder = await Order.findById(order.id);
             expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
         });
+
+        it.todo('should emit order cancelled event');
     });
 });
