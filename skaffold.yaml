@@ -5,12 +5,12 @@ deploy:
         manifests:
             - ./infra/k8s/*
 build:
-    # local:
-    #     push: false
-    googleCloudBuild:
-        projectId: resonant-matter-282017
+    local:
+        push: false
+    # googleCloudBuild:
+    #     projectId: resonant-matter-282017
     artifacts:
-        - image: us.gcr.io/resonant-matter-282017/auth
+        - image: kierkegaardsmiles/auth
           context: auth
           docker:
               dockerfile: Dockerfile
@@ -18,7 +18,7 @@ build:
               manual:
                   - src: "src/**/*.ts"
                     dest: .
-        - image: us.gcr.io/resonant-matter-282017/tickets
+        - image: kierkegaardsmiles/tickets
           context: tickets
           docker:
               dockerfile: Dockerfile
@@ -26,7 +26,7 @@ build:
               manual:
                   - src: "src/**/*.ts"
                     dest: .
-        - image: us.gcr.io/resonant-matter-282017/client
+        - image: kierkegaardsmiles/client
           context: client
           docker:
               dockerfile: Dockerfile
@@ -34,7 +34,7 @@ build:
               manual:
                   - src: "src/**/*.js"
                     dest: .
-        - image: us.gcr.io/resonant-matter-282017/orders
+        - image: kierkegaardsmiles/orders
           context: orders
           docker:
               dockerfile: Dockerfile
