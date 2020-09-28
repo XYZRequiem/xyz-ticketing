@@ -1,6 +1,6 @@
 {
     "name": "@histoiredevelopment/common",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "main": "./build/index.js",
     "types": "./build/index.d.ts",
     "files": [
@@ -9,7 +9,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npm run clean && tsc",
-        "clean": "rm ./build/*",
+        "clean": "del ./build/*",
         "pub": "git add . && git commit -m \"added common events\" && npm version patch && npm run build && npm publish"
     },
     "keywords": [],
