@@ -10,7 +10,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npm run clean && tsc",
         "clean": "del ./build/*",
-        "pub": "git add . && git commit -m \"added common events\" && npm version patch && npm run build && npm publish"
+        "pub": "git add . && git commit -m \"bump common patch version\" && npm version patch && npm run build && npm publish"
     },
     "keywords": [],
     "author": "",
