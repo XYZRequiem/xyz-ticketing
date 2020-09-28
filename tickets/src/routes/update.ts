@@ -4,7 +4,7 @@ import {
     requireAuth,
     validateRequest,
     NotFoundError,
-    UnauthorizedError,
+    UnauthorizedError, BadRequestError
 } from '@histoiredevelopment/common';
 import { Ticket } from '../models/ticket';
 import { natsWrapper } from '../nats-wrapper';
@@ -28,6 +28,10 @@ router.put(
             throw new NotFoundError();
         }
 
+        if(ticket.orderId) {
+            throw new BadRequestError('Cannot edit a reserved ticket')
+        }
+
         if (ticket.userId !== req.currentUser!.id) {
             throw new UnauthorizedError();
         }
@@ -38,6 +42,7 @@ router.put(
 
         new TicketUpdatedPublisher(natsWrapper.client).publish({
             id: ticket._id,
+            version: ticket.version,
             title: ticket.title,
             price: ticket.price,
             userId: ticket.userId,

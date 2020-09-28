@@ -7,8 +7,6 @@ deploy:
 build:
     local:
         push: false
-    # googleCloudBuild:
-    #     projectId: resonant-matter-282017
     artifacts:
         - image: kierkegaardsmiles/auth
           context: auth

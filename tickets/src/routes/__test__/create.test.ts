@@ -1,9 +1,9 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { authedSignup } from './auth-helper';
+import { authedSignup } from '../../test/auth-helper';
 import { Ticket } from '../../models/ticket';
 
-import { mockTitle, mockPrice, mockCreateTicketPayload } from './mock-data';
+import { mockTitle, mockPrice, mockCreateTicketPayload } from '../../test/mock-data';
 import { natsWrapper } from '../../nats-wrapper';
 
 describe('Ticket create.ts', () => {

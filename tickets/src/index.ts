@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { app } from './app';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { natsWrapper } from './nats-wrapper';
-import { randomBytes } from 'crypto';
 const PORT = 3000;
 
 const mongoURL = process.env.MONGO_URI || `mongodb://localhost:27017/tickets`;
@@ -31,6 +32,10 @@ const initApp = async () => {
         });
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
+
+        new OrderCreatedListener(natsWrapper.client).listen()
+        new OrderCancelledListener(natsWrapper.client).listen()
+
         await mongoose.connect(mongoURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,

@@ -1,20 +1,22 @@
-import mongoose from 'mongoose';
-import { app } from './app';
-import { natsWrapper } from './nats-wrapper';
-import { randomBytes } from 'crypto';
+import mongoose from "mongoose";
+import { app } from "./app";
+import { natsWrapper } from "./nats-wrapper";
+import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
+import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
+
 const PORT = 3000;
 
 const mongoURL = process.env.MONGO_URI || `mongodb://localhost:27017/orders`;
 
 const initApp = async () => {
-    if (!mongoURL.includes('localhost') && !process.env.MONGO_URI) {
-        throw new Error('Missing MONGO_URI environment variable');
+    if (!mongoURL.includes("localhost") && !process.env.MONGO_URI) {
+        throw new Error("Missing MONGO_URI environment variable");
     }
     const mandatoryEnvVariables = [
-        'JWT_KEY',
-        'NATS_CLIENT_ID',
-        'NATS_URL',
-        'NATS_CLUSTER_ID',
+        "JWT_KEY",
+        "NATS_CLIENT_ID",
+        "NATS_URL",
+        "NATS_CLUSTER_ID",
     ];
     for (let envVariable of mandatoryEnvVariables) {
         if (!process.env[envVariable]) {
@@ -25,19 +27,23 @@ const initApp = async () => {
     const { NATS_CLIENT_ID, NATS_URL, NATS_CLUSTER_ID } = process.env;
     try {
         await natsWrapper.connect(NATS_CLUSTER_ID!, NATS_CLIENT_ID!, NATS_URL!);
-        natsWrapper.client.on('close', () => {
-            console.log('NATS connection closed!');
+        natsWrapper.client.on("close", () => {
+            console.log("NATS connection closed!");
             process.exit();
         });
-        process.on('SIGINT', () => natsWrapper.client.close());
-        process.on('SIGTERM', () => natsWrapper.client.close());
+        process.on("SIGINT", () => natsWrapper.client.close());
+        process.on("SIGTERM", () => natsWrapper.client.close());
+
+        new TicketCreatedListener(natsWrapper.client).listen();
+        new TicketUpdatedListener(natsWrapper.client).listen();
+
         await mongoose.connect(mongoURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
         });
 
-        console.log('Connected to mongoDB');
+        console.log("Connected to mongoDB");
     } catch (err) {
         console.error(err);
     }

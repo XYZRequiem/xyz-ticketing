@@ -5,6 +5,7 @@ const mockCreateTicketPayload = () => {
     return {
         title: mockTitle,
         price: mockPrice,
+        userId: createMockId()
     };
 };
 const createMockId = () => {

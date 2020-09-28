@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { authedSignup } from './auth-helper';
+import { authedSignup } from '../../test/auth-helper';
 
 import {
     mockCreateTicketPayload,
@@ -8,8 +8,9 @@ import {
     mockUpdatePayload,
     mockUpdateTitle,
     mockUpdatePrice,
-} from './mock-data';
+} from '../../test/mock-data';
 import { natsWrapper } from '../../nats-wrapper';
+import { Ticket } from '../../models/ticket';
 
 describe('Ticket update-ticket.ts', () => {
     const createTicket = async () => {
@@ -90,4 +91,19 @@ describe('Ticket update-ticket.ts', () => {
 
         expect(natsWrapper.client.publish).toHaveBeenCalled();
     });
+
+    it('should throw error when user attempts to update a reserved ticket', async () => {
+        const { ticketRes, cookie } = await createTicket();
+        
+        const ticket = await Ticket.findById(ticketRes.body.id)
+        ticket?.set({orderId: createMockId()})
+        await ticket?.save()
+        
+        const mockPayload = {title:'Justin Timberlake - Justified', price: 1111}
+        await request(app)
+            .put(`/api/tickets/${ticketRes.body.id}`)
+            .set('Cookie', cookie)
+            .send(mockPayload)
+            .expect(400);
+    })
 });

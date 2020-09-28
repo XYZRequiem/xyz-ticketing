@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { authedSignup } from './auth-helper';
+import { authedSignup } from '../../test/auth-helper';
 
-import { mockCreateTicketPayload } from './mock-data';
+import { mockCreateTicketPayload } from '../../test/mock-data';
 
 describe('Ticket get-tickets.ts', () => {
     const createTicket = () => {

@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { createMockId, createMockTicket, createMockOrder } from './mock-data';
-import { authedSignup } from './auth-helper';
+import { createMockId, createMockTicket, createMockOrder } from '../../test/mock-data';
+import { authedSignup } from '../../test/auth-helper';
 import { natsWrapper } from '../../nats-wrapper';
 
 describe('Order create.ts', () => {

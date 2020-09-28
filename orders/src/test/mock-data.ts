@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
-import { Order, OrderStatus } from '../../models/order';
-import { Ticket, TicketDoc } from '../../models/ticket';
+import mongoose from "mongoose";
+import { Order, OrderStatus } from "../models/order";
+import { Ticket, TicketDoc } from "../models/ticket";
 
-const mockTitle = 'Brent Faiyaz - Into';
-const mockPrice = 114.99;
+export const mockTitle = "Brent Faiyaz - Into";
+export const mockPrice = 114.99;
 
-const mockUserId = 'user_asdfas8dasdf';
+export const mockUserId = "user_asdfas8dasdf";
 
 export const createMockId = () => {
     return new mongoose.Types.ObjectId().toHexString();
@@ -13,9 +13,10 @@ export const createMockId = () => {
 
 export const createMockTicket = async (
     title = mockTitle,
-    price = mockPrice
+    price = mockPrice,
+    id = createMockId()
 ) => {
-    const ticket = Ticket.build({ title, price });
+    const ticket = Ticket.build({ title, price, id, version: 0 });
     await ticket.save();
 
     return ticket;

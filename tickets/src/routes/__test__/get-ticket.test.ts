@@ -1,13 +1,13 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { authedSignup } from './auth-helper';
+import { authedSignup } from '../../test/auth-helper';
 
 import {
     mockTitle,
     mockPrice,
     mockCreateTicketPayload,
     createMockId,
-} from './mock-data';
+} from '../../test/mock-data';
 
 describe('Ticket get-ticket.ts', () => {
     it('should return 404 if the ticket does not exist', async () => {
