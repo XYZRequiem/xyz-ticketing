@@ -19,7 +19,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@histoiredevelopment/common": "^1.0.17",
+        "@histoiredevelopment/common": "^1.0.19",
         "@types/bull": "^3.14.4",
         "bull": "^3.18.0",
         "node-nats-streaming": "^0.3.2",
