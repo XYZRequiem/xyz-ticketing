@@ -32,6 +32,14 @@ build:
               manual:
                   - src: "src/**/*.js"
                     dest: .
+        - image: kierkegaardsmiles/expiration
+          context: expiration
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: "src/**/*.js"
+                    dest: .
         - image: kierkegaardsmiles/orders
           context: orders
           docker:
