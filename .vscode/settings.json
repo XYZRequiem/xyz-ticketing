@@ -1,0 +1,6 @@
+{
+    "javascript.format.semicolons": "insert",
+    "typescript.format.semicolons": "insert",
+    "html.format.wrapLineLength": 100,
+    "files.insertFinalNewline": true
+}
