@@ -3,7 +3,8 @@ import axios from 'axios';
 export default ({ req }) => {
     if (typeof window === 'undefined') {
         // We are on the server
-        const serverURL = `http://ingress-nginx-controller.ingress-nginx.svc.cluster.local`;
+        // const serverURL = `http://ingress-nginx-controller.ingress-nginx.svc.cluster.local`;
+        const serverURL = `http://www.xyzrequiem.com/`;
 
         return axios.create({
             baseURL: serverURL,
