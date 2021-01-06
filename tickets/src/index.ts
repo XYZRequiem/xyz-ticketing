@@ -33,8 +33,8 @@ const initApp = async () => {
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
 
-        new OrderCreatedListener(natsWrapper.client).listen()
-        new OrderCancelledListener(natsWrapper.client).listen()
+        new OrderCreatedListener(natsWrapper.client).listen();
+        new OrderCancelledListener(natsWrapper.client).listen();
 
         await mongoose.connect(mongoURL, {
             useNewUrlParser: true,
@@ -48,7 +48,7 @@ const initApp = async () => {
     }
 
     app.listen(PORT, () => {
-        console.log(`Listening on port ${PORT}!`);
+        console.log(`Listening on port ${PORT}!!`);
     });
 };
 initApp();
